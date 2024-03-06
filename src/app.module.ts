@@ -1,18 +1,12 @@
-import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
-import { SequelizeModule } from '@nestjs/sequelize';
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+
 @Module({
   imports: [
-    SequelizeModule.forRoot({
-      dialect: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'root',
-      password: 'root',
-      database: 'nest-basic',
-      models: [],
-      autoLoadModels: true,
-    }),
+    MongooseModule.forRoot(
+      'mongodb+srv://forsyterun:C6oTJ8IchNbIE65D@jewerly.eum5syn.mongodb.net/jewerly?retryWrites=true&w=majority',
+    ),
     UsersModule,
   ],
 })
