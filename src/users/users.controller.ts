@@ -1,16 +1,29 @@
-import { Controller, Get, Res, Param, Body, Put } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Put, Patch } from '@nestjs/common';
 import { Response } from 'express';
 import { UserDto } from './dto/user.dto';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get()
+  getAll() {
+    return this.usersService.getAllUsers();
+  }
+
   @Get(':id')
-  async getAll(@Body() userDto: UserDto) {
+  getById(@Param('id') id: string) {
+    return this.usersService.getUserById(id);
+  }
+
+  @Post()
+  createUser(@Body() userDto: UserDto) {
     return userDto;
   }
 
   @Put(':id')
-  async updateUser(@Param('id') id: string, @Body() userDto: UserDto) {
-    return `This action updates a #${id} cat`;
+  updateUser(@Param('id') id: string, @Body() userDto: UserDto) {
+    return this.usersService.updateUser(id, userDto);
   }
 }
