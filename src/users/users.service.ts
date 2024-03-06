@@ -9,19 +9,21 @@ export class UsersService {
 
   async createUser(userDto: UserDto): Promise<User> {
     const newUser = new this.userModel(userDto);
-    newUser.save();
+    await newUser.save();
     return newUser;
   }
 
   async getAllUsers(): Promise<User[]> {
-    return this.userModel.find();
+    return await this.userModel.find({ name: 'dddddddd' });
   }
 
   async getUserById(id: string) {
-    return this.userModel.findById(id);
+    return await this.userModel.findById(id);
   }
 
   async updateUser(id: string, body: UserDto) {
-    return this.userModel.findByIdAndUpdate({_id: id}, body, { new: true });
+    return await this.userModel.findByIdAndUpdate({ _id: id }, body, {
+      new: true,
+    });
   }
 }
