@@ -1,5 +1,4 @@
 import { Controller, Get, Post, Param, Body, Put, Patch } from '@nestjs/common';
-import { Response } from 'express';
 import { UserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
 
