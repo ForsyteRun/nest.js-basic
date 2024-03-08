@@ -2,10 +2,12 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 
-export type UserDocument = HydratedDocument<User>;
-
+interface IUser {
+  name: string;
+  age: number;
+}
 @Schema()
-export class User {
+export class User implements IUser {
   @ApiProperty({ example: 'Ivam', description: 'user name' })
   @Prop({ required: true })
   name: string;
