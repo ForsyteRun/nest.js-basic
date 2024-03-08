@@ -15,4 +15,9 @@ export class RolesController {
   getRoleByValue(@Param('value') value: string) {
     return this.roleService.getRoleByValue(value);
   }
+
+  @Get()
+  getAllRoles(createRoleDto: CreateRoleDto) {
+    return this.roleService.getAllRoles();
+  }
 }

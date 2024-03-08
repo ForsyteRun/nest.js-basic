@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
+import { Role } from 'src/roles/roles.schema';
 
 interface IUser {
   name: string;
   age: number;
-  role: string;
+  role: Role[];
 }
 @Schema()
 export class User implements IUser {
@@ -18,7 +19,7 @@ export class User implements IUser {
 
   @ApiProperty({ example: 'Admin', description: 'user role' })
   @Prop()
-  role: string;
+  role: Role[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
