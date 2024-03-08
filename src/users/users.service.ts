@@ -3,14 +3,22 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './users.schema';
 import { Model } from 'mongoose';
 import { UserDto } from './dto/user.dto';
+import { RolesService } from 'src/roles/roles.service';
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    private readonly rolesUpdate: RolesService,
+  ) {}
 
   async createUser(userDto: UserDto): Promise<User> {
     const newUser = new this.userModel(userDto);
-    await newUser.save();
-    return newUser;
+    const user = await newUser.save();
+
+    const role = await this.rolesUpdate.getRoleByValue('Admin');
+    await user.$set('role', [role[0]._id]);
+
+    return user;
   }
 
   async getAllUsers(): Promise<User[]> {

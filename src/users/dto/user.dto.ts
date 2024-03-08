@@ -6,4 +6,7 @@ export class UserDto {
 
   @ApiProperty({ example: 100, description: 'age count' })
   age: number;
+
+  @ApiProperty({ example: 'Admin', description: 'user role' })
+  role: string;
 }

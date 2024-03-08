@@ -3,14 +3,19 @@ import { HydratedDocument } from 'mongoose';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 
 interface UserRole {
-  role: 'admin' | 'user';
+  value: 'admin' | 'user' | 'boss';
   description: string;
 }
 
+@Schema()
 export class Role implements UserRole {
+  @ApiProperty({ example: '1', description: 'role' })
+  @Prop()
+  roleId: number;
+
   @ApiProperty({ example: 'admin', description: 'administrator role' })
   @Prop({ required: true })
-  role: 'admin' | 'user';
+  value: 'admin' | 'user';
 
   @ApiProperty({
     example: 'for administrator only',

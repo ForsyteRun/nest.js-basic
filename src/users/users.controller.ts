@@ -26,7 +26,7 @@ export class UsersController {
   @ApiResponse({ status: 201, type: User })
   @Post()
   createUser(@Body() userDto: UserDto) {
-    return userDto;
+    return this.usersService.createUser(userDto);
   }
 
   @ApiOperation({ description: 'update user' })
