@@ -39,6 +39,10 @@ export class UsersService {
     return await this.userModel.findById(id);
   }
 
+  async getUserByName(name: string) {
+    return await this.userModel.find({ name });
+  }
+
   async updateUser(id: string, body: UserDto) {
     return await this.userModel.findByIdAndUpdate({ _id: id }, body, {
       new: true,
