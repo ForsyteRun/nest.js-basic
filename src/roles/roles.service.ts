@@ -26,12 +26,13 @@ export class RolesService {
     return role;
   }
 
-  async getRoleByValue(value: string) {
-    const role = await this.roleRepository.findOne({ value }).exec();
+  async getRoleByValue(value: string): Promise<Role[]> {
+    const role = await this.roleRepository.find({ value });
     return role;
   }
 
   async getAllRoles(): Promise<Role[]> {
-    return this.roleRepository.find({});
+    const roles = this.roleRepository.find({});
+    return roles;
   }
 }
