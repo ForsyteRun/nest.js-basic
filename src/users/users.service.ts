@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, UseGuards, forwardRef } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 import { InjectModel } from '@nestjs/mongoose';
@@ -6,6 +6,7 @@ import { User } from './users.schema';
 import { Model } from 'mongoose';
 import { UserDto } from './dto/user.dto';
 import { RolesService } from 'src/roles/roles.service';
+import { AuthGuard } from 'src/auth/jwt-auth.guard';
 @Injectable()
 export class UsersService {
   constructor(
