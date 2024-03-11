@@ -17,6 +17,10 @@ export class User implements IUser {
   @Prop({ required: true })
   age: number;
 
+  @ApiProperty({ example: '12345', description: 'user password' })
+  @Prop()
+  password: string;
+
   @ApiProperty({ example: 'Admin', description: 'user role' })
   @Prop()
   role: Role[];

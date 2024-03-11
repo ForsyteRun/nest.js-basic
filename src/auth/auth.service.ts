@@ -20,20 +20,21 @@ export class AuthService {
   async registration(userDto: UserDto) {
     const user = await this.usersService.getUserByName(userDto.name);
 
-    console.log(user);
-
     if (user.length) {
       throw new HttpException('user exist', HttpStatus.FORBIDDEN);
     }
 
-    const hashAge = await bcrypt.hash(String(userDto.age), 5);
+    const hashPassword = await bcrypt.hash(userDto.password, 5);
 
-    const newUser = await this.usersService.createUser(userDto);
+    const newUser = await this.usersService.createUser({
+      ...userDto,
+      password: hashPassword,
+    });
     return this.genarateToken(newUser);
   }
 
   async genarateToken(user: User) {
-    const payload = { age: user.age, role: user.role };
+    const payload = { age: user.age, role: user.role, password: user.password };
 
     const token = this.jwtService.sign(payload);
 
