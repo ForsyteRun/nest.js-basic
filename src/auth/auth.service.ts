@@ -1,4 +1,9 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 import { UserDto } from 'src/users/dto/user.dto';
 import { UsersService } from 'src/users/users.service';
@@ -14,7 +19,10 @@ export class AuthService {
   ) {}
 
   @ApiOperation({ description: 'auth' })
-  async login(userDto: UserDto) {}
+  async login(userDto: UserDto) {
+    const user = await this.validateUser(userDto);
+    return user;
+  }
 
   @ApiOperation({ description: 'registration' })
   async registration(userDto: UserDto) {
@@ -33,11 +41,25 @@ export class AuthService {
     return this.genarateToken(newUser);
   }
 
-  async genarateToken(user: User) {
+  private async genarateToken(user: User) {
     const payload = { age: user.age, role: user.role, password: user.password };
 
-    const token = this.jwtService.sign(payload);
+    const token = await this.jwtService.signAsync(payload);
 
-    return token;
+    return { token };
+  }
+
+  private async validateUser(data: UserDto) {
+    const user = await this.usersService.getUserByName(data.name);
+    const isEqualPassword = await bcrypt.compare(
+      data.password,
+      user[0].password,
+    );
+
+    if (user && isEqualPassword) {
+      return user;
+    }
+
+    throw new UnauthorizedException('wrong login or password');
   }
 }

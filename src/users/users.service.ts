@@ -17,9 +17,9 @@ export class UsersService {
   async createUser(userDto: UserDto): Promise<User> {
     try {
       const newUser = new this.userModel(userDto);
-      const role = await this.RolesService.getRoleByValue(userDto.role);
+      // const role = await this.RolesService.getRoleByValue(userDto[0].role);
 
-      if (role) newUser.role = role;
+      // if (role) newUser.role = role;
 
       await newUser.save();
       return newUser;

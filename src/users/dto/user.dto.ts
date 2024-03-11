@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Role } from 'src/roles/roles.schema';
 
 export class UserDto {
   @ApiProperty({ example: 'Ivam', description: 'user name' })
@@ -11,5 +12,5 @@ export class UserDto {
   password: string;
 
   @ApiProperty({ example: 'Admin', description: 'user role' })
-  role: string;
+  role: Role[];
 }
