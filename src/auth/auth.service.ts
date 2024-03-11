@@ -21,7 +21,7 @@ export class AuthService {
   @ApiOperation({ description: 'auth' })
   async login(userDto: UserDto) {
     const user = await this.validateUser(userDto);
-    return user;
+    return this.genarateToken(user[0]);
   }
 
   @ApiOperation({ description: 'registration' })
